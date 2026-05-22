@@ -1,0 +1,21 @@
+global:
+  environment: dev
+
+replicaCount: 1
+
+# Parameterizing the details of the images pulled by the containers
+images:
+  registry: 864899875929.dkr.ecr.us-east-1.amazonaws.com/wiz-repository
+  appTag: wiz-dev-app
+  proxyTag: wiz-dev-proxy
+  pullPolicy: Always
+
+# Parameterizing the details of the ACM ARN and WAFL ACL ARN
+aws:
+  acmCertificateArn: arn:aws:acm:us-east-1:864899875929:certificate/1dbef61d-d893-4e5d-8d1f-a2a545481b16
+  wafAclArn: arn:aws:wafv2:us-east-1:864899875929:regional/webacl/dev-wiz-public/6fa85dfb-846b-4a96-a572-c2c14b6d6ef4
+
+# Parameterizing the details of the DNS domain name used for header verification and group name for the Ingress
+ingress:
+  host: techtask.grahamschuckman.com
+  groupName: shared-wiz-alb

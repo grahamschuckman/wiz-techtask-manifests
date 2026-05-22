@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wiz-app-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/your-org/your-repo.git' # Path to your helm chart git repo
+    targetRevision: HEAD
+    path: wiz-app-chart
+    
+    # --- HERE IS WHERE YOU OVERRIDE VALUES FOR CI/CD ---
+    helm:
+      values: |
+        global:
+          environment: dev
+        replicaCount: 2
+        ingress:
+          host: dev.techtask.grahamschuckman.com
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd # ArgoCD will create the target namespace via the chart
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
