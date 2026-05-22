@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: wiz-{{ .Values.global.environment }}-app
   name: deployment-wiz-{{ .Values.global.environment }}-app
 spec:
   selector:

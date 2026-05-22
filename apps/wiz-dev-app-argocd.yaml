@@ -2,26 +2,31 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: wiz-app-dev
-  namespace: argocd
+  # This metadata namespace is WHERE ARGOCD LIVES. 
+  # ArgoCD only looks for Application CRDs in its own namespace.
+  namespace: argocd 
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/your-org/your-repo.git' # Path to your helm chart git repo
+    repoURL: 'https://github.com/your-org/your-repo.git'
     targetRevision: HEAD
     path: wiz-app-chart
-    
-    # --- HERE IS WHERE YOU OVERRIDE VALUES FOR CI/CD ---
     helm:
       values: |
         global:
           environment: dev
-        replicaCount: 2
-        ingress:
-          host: dev.techtask.grahamschuckman.com
+  
   destination:
+    # 1. Points to the local EKS cluster ArgoCD lives on
     server: 'https://kubernetes.default.svc'
-    namespace: argocd # ArgoCD will create the target namespace via the chart
+    # 2. Points to your intended application home
+    namespace: wiz-dev-app 
+    
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    # This syncOption ensures ArgoCD allows the Helm chart to create 
+    # the namespace if it doesn't exist yet.
+    syncOptions:
+      - CreateNamespace=true
