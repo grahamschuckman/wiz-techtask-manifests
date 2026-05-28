@@ -18,9 +18,9 @@ spec:
         name: wiz-{{ .Values.global.environment }}-app
         ports:
         - containerPort: 8080
-        env:
         # 1. Check if mongodbUri is defined in values
         {{- if .Values.mongodbUri }} 
+        env:
         - name: MONGODB_URI
           value: {{ .Values.mongodbUri | quote }}
         {{- end }}
