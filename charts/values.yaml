@@ -21,4 +21,5 @@ ingress:
   groupName: shared-wiz-alb
 
 # # Variable that will override the MONGODB_URI if desired
+# Need to remove the hardcoded default goober value and let it be passed in from the ArgoCD application manifest
 # mongodbUri: goober
