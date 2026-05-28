@@ -20,5 +20,5 @@ ingress:
   host: techtask.grahamschuckman.com
   groupName: shared-wiz-alb
 
-# Variable that will override the MONGODB_URI if desired
-mongodbUri: goober
+# # Variable that will override the MONGODB_URI if desired
+# mongodbUri: goober
